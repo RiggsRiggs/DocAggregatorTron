@@ -11,6 +11,7 @@ namespace DocAggregatorTron
     public class TomAggregator : IProcessor
     {
         private const string WorkingDirectory = @"G:\My Drive\MyAdmin\PropertyDocAggregator\FilesHere";
+        private const string OutputDirectory = @"G:\My Drive\MyAdmin\PropertyDocAggregator\Output";
         public void DoSomeWork()
         {
             //get files to be processed
@@ -22,8 +23,14 @@ namespace DocAggregatorTron
 
             foreach (var file in fileInfos)
             {
-                Console.WriteLine($"Processing {file.Name}");
+                Console.WriteLine(file.Name.Substring(0,5));
             }
+
+            var timeStamp = DateTime.Now.ToString("yyyyMMddhhmmss");
+            var outputDirectoryName = $"Output_{timeStamp}";
+            var outputDirectoryPath = Path.Combine(OutputDirectory, outputDirectoryName);
+
+            Directory.CreateDirectory(outputDirectoryPath);
 
         }
 
