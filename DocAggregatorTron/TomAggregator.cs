@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.IO.Compression;
 
 
 namespace DocAggregatorTron
@@ -33,7 +34,7 @@ namespace DocAggregatorTron
 
             foreach (var file in fileInfos)
             {
-                Console.WriteLine(file.Name.Substring(0, offset));
+                //Console.WriteLine(file.Name.Substring(0, offset));
                 var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
                 Directory.CreateDirectory(propertyDirectory);
             }
@@ -49,6 +50,19 @@ namespace DocAggregatorTron
             }
 
 
+            // Get all subdirectories
+
+            string[] subdirectoryEntries = Directory.GetDirectories(outputDirectoryPath);
+
+            foreach(var item in subdirectoryEntries)
+            {
+                string folderToZip = item;
+                string zipFile = item+".zip";
+
+                ZipFile.CreateFromDirectory(folderToZip, zipFile);
+
+                Directory.Delete(item, true);
+            }
 
         }
 
@@ -61,6 +75,6 @@ namespace DocAggregatorTron
 
             return filtered;
         }
-
+               
     }
 }
