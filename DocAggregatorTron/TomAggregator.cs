@@ -34,10 +34,11 @@ namespace DocAggregatorTron
             foreach (var file in fileInfos)
             {
                 Console.WriteLine(file.Name.Substring(0,offset));
-                //Directory.CreateDirectory();
+                var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
+                Directory.CreateDirectory(propertyDirectory);
             }
                    
-  
+ 
         }
 
         private IEnumerable<FileInfo> GetFiles(string workingDirectory)
