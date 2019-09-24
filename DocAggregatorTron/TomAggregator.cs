@@ -12,6 +12,8 @@ namespace DocAggregatorTron
     {
         private const string WorkingDirectory = @"G:\My Drive\MyAdmin\PropertyDocAggregator\FilesHere";
         private const string OutputDirectory = @"G:\My Drive\MyAdmin\PropertyDocAggregator\Output";
+        private const int offset = 5;
+
         public void DoSomeWork()
         {
             //get files to be processed
@@ -21,17 +23,21 @@ namespace DocAggregatorTron
             if (!fileInfos.Any())
                 return;
 
-            foreach (var file in fileInfos)
-            {
-                Console.WriteLine(file.Name.Substring(0,5));
-            }
-
             var timeStamp = DateTime.Now.ToString("yyyyMMddhhmmss");
             var outputDirectoryName = $"Output_{timeStamp}";
             var outputDirectoryPath = Path.Combine(OutputDirectory, outputDirectoryName);
 
             Directory.CreateDirectory(outputDirectoryPath);
 
+            Console.WriteLine("New folders to go in: " + outputDirectoryPath);
+
+            foreach (var file in fileInfos)
+            {
+                Console.WriteLine(file.Name.Substring(0,offset));
+                //Directory.CreateDirectory();
+            }
+                   
+  
         }
 
         private IEnumerable<FileInfo> GetFiles(string workingDirectory)
