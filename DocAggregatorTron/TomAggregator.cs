@@ -29,16 +29,27 @@ namespace DocAggregatorTron
 
             Directory.CreateDirectory(outputDirectoryPath);
 
-            Console.WriteLine("New folders to go in: " + outputDirectoryPath);
+            //Console.WriteLine("New folders to go in: " + outputDirectoryPath);
 
             foreach (var file in fileInfos)
             {
-                Console.WriteLine(file.Name.Substring(0,offset));
+                Console.WriteLine(file.Name.Substring(0, offset));
                 var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
                 Directory.CreateDirectory(propertyDirectory);
             }
-                   
- 
+
+            foreach (var file in fileInfos)
+            {
+                //Console.WriteLine(file.Name.Substring(0, offset));
+                var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
+                var fileToCopy = Path.Combine(WorkingDirectory, file.Name);
+                var newLocation = Path.Combine(propertyDirectory, file.Name);
+                
+                File.Copy(fileToCopy, newLocation);
+            }
+
+
+
         }
 
         private IEnumerable<FileInfo> GetFiles(string workingDirectory)
