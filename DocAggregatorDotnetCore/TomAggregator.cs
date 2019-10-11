@@ -19,11 +19,6 @@ namespace DocAggregatorDotnetCore
 
         public void DoSomeWork()
         {
-            var ctx = new RiggsTestContext();
-            var record = ctx.PropDocs.Find(1);
-
-            Console.WriteLine(record.PropRef);
-
 
             //get files to be processed
             var files = GetFiles(WorkingDirectory);
@@ -38,14 +33,21 @@ namespace DocAggregatorDotnetCore
 
             Directory.CreateDirectory(outputDirectoryPath);
 
-            //Console.WriteLine("New folders to go in: " + outputDirectoryPath);
+            //make array of property refs
+            var ctx = new RiggsTestContext();
+            var listOfDocs = ctx.PropDocs.Select(p => p).ToList();
+            var docsArray = listOfDocs.ToArray();
 
-            foreach (var file in fileInfos)
+
+            //new make directories
+            foreach (var item in docsArray)
             {
+                Console.WriteLine(item.PropRef);
                 //Console.WriteLine(file.Name.Substring(0, offset));
-                var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
+                var propertyDirectory = Path.Combine(outputDirectoryPath,item.PropRef.ToString());
                 Directory.CreateDirectory(propertyDirectory);
             }
+
 
             foreach (var file in fileInfos)
             {
