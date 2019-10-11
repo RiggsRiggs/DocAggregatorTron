@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
+using DataAccessLayer;
 
 //Adding a comment just to enable New Features branch
 
@@ -18,6 +19,12 @@ namespace DocAggregatorDotnetCore
 
         public void DoSomeWork()
         {
+            var ctx = new RiggsTestContext();
+            var record = ctx.PropDocs.Find(1);
+
+            Console.WriteLine(record.PropRef);
+
+
             //get files to be processed
             var files = GetFiles(WorkingDirectory);
 
@@ -76,6 +83,9 @@ namespace DocAggregatorDotnetCore
 
             return filtered;
         }
-               
+
+
+
+
     }
 }
