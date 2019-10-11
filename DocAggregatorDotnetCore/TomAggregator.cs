@@ -8,7 +8,7 @@ using System.IO.Compression;
 
 //Adding a comment just to enable New Features branch
 
-namespace DocAggregatorTron
+namespace DocAggregatorDotnetCore
 {
     public class TomAggregator : IProcessor
     {
