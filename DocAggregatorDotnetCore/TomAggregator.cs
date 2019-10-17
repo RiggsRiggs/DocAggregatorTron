@@ -43,9 +43,10 @@ namespace DocAggregatorDotnetCore
 
             using (var ctx = new RiggsTestContext())
             {
-                var listOfDocs = ctx.PropDocs.AsNoTracking().ToList();
-                                            
-            //new make directories
+                var listOfDocs = ctx.PropDocs.AsNoTracking().Where(p => p.PropRef != null).ToList();
+                
+
+                //new make directories
                 foreach (var item in listOfDocs)
                 {
                     Console.WriteLine(item.PropRef);
