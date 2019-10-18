@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.IO.Compression;
 using DataAccessLayer;
+using Microsoft.EntityFrameworkCore;
 
 //Adding a comment just to enable New Features branch
 
@@ -19,11 +20,6 @@ namespace DocAggregatorDotnetCore
 
         public void DoSomeWork()
         {
-            var ctx = new RiggsTestContext();
-            var record = ctx.PropDocs.Find(1);
-
-            Console.WriteLine(record.PropRef);
-
 
             //get files to be processed
             var files = GetFiles(WorkingDirectory);
@@ -38,13 +34,27 @@ namespace DocAggregatorDotnetCore
 
             Directory.CreateDirectory(outputDirectoryPath);
 
-            //Console.WriteLine("New folders to go in: " + outputDirectoryPath);
+            //make array of property refs
+            //var ctx = new RiggsTestContext();
+            //var listOfDocs = ctx.PropDocs.Select(p => p).ToList();
+            //var docsArray = listOfDocs.ToArray();
 
-            foreach (var file in fileInfos)
+            //Where(x => x.Name == null)
+
+            using (var ctx = new RiggsTestContext())
             {
-                //Console.WriteLine(file.Name.Substring(0, offset));
-                var propertyDirectory = Path.Combine(outputDirectoryPath, file.Name.Substring(0, offset));
-                Directory.CreateDirectory(propertyDirectory);
+                var listOfDocs = ctx.PropDocs.AsNoTracking().Where(p => p.PropRef != null).ToList();
+                
+
+                //new make directories
+                foreach (var item in listOfDocs)
+                {
+                    Console.WriteLine(item.PropRef);
+                    //Console.WriteLine(file.Name.Substring(0, offset));
+                    var propertyDirectory = Path.Combine(outputDirectoryPath,item.PropRef.ToString());
+                    Directory.CreateDirectory(propertyDirectory);
+                }
+                
             }
 
             foreach (var file in fileInfos)
