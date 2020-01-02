@@ -10,5 +10,6 @@ namespace DataAccessLayer.Entities
         [Column("ID")]
         public int Id { get; set; }
         public int? PropRef { get; set; }
+        public string Message { get; set; }
     }
 }
