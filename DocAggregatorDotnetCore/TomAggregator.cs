@@ -47,12 +47,18 @@ namespace DocAggregatorDotnetCore
                 foreach (var item in listOfDocs)
                 {
                     Console.WriteLine(item.PropRef);
-                    Console.WriteLine(item.Message);
+                    
                     //Console.WriteLine(file.Name.Substring(0, offset));
                     var propertyDirectory = Path.Combine(outputDirectoryPath,item.PropRef.ToString());
                     Directory.CreateDirectory(propertyDirectory);
+
+                    var result = ctx.PropDocs.SingleOrDefault(b => b.Id == item.Id);
+                    result.Message = "ting"+ item.PropRef;
+                    ctx.SaveChanges();
                 }
-                
+
+
+
             }
 
             foreach (var file in fileInfos)
